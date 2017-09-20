@@ -1,0 +1,170 @@
+agenda = []         #Criando uma lista.
+arq = open('arquivo.txt', 'a')
+
+#Definindo as Funções:
+ 
+def p_nome():       #1
+     return(input("Nome: "))
+ 
+ 
+def p_endereco():   #2
+     return(input("endereco: "))
+ 
+ 
+def p_rua():    #F3
+     return(input("rua: "))
+ 
+ 
+def p_bairro():      #F4
+     return(input("bairro: "))
+
+def p_estado():      #5
+     return(input("estado: "))
+
+def p_cep():      #6
+     return(input("cep: "))
+
+def p_telefone():      #7
+     return(input("telefone: "))
+ 
+ 
+def listar_dados(nome, endereco, cep, rua, bairro, estado, telefone):      #Função que mostra todos os dados do contato.
+     print("Nome: %s\nTelefone: %s\nRua: %s\nEmail: %s\nCep: %s\nBairro: %s\nEstado: %s\endereco: " % (nome, telefone, celular, email))
+ 
+ 
+def pesquisa(nome):          
+     name = open('arquivo.txt', 'r')    
+     for d, e in enumerate(agenda):     
+         if e[0].lower() == name:       
+               return d                 
+     return None                        
+"""
+* Foi atribuído o metodo lower para que não haja problemas
+quando usuário digitar maiusculo e programa não reconhecer.
+* Está usando a função enumerate para acessar a posição do elemento
+e o próprio elemento.
+* Função return para indicar o valor a retornar.
+* Função return None,caso o dado não seja encontrado, não vai retornar nada.
+"""
+ 
+ 
+def novo():                   #Função para adicionar novo Contato.
+     global agenda            #Definindo variável como Global.
+     nome = p_nome()        
+     endereco = p_endereco()  
+     rua = p_rua()    
+     cep = p_cep()
+     estado = p_estado()
+     bairro = p_bairro()
+     telefone = p_telefone()
+     agenda.append([nome, estado, endereco, rua, bairro, cep, telefone]) #Adicionando os dados na agenda
+"""
+* Está sendo utilizada a variável global pois será possível o acesso
+da mesma tanto dentro como fora da função, ou seja, pode ser acessada
+por todas as funções do programa.
+* Está sendo utilizado o método append para ser possível adicionar
+novos dados durante a execução do programa na nossa agenda.
+"""
+ 
+def apagar():            #Função para apagar um contato.
+     global agenda       
+     nome = p_nome()     
+     p = pesquisa(nome) 
+     if p != None:       
+         del agenda[p]   
+     else:
+         print("Nome não encontrado.")  #Executa caso a condição for falsa.
+ 
+ 
+def editar():                     
+     p = pesquisa(p_nome())     
+     if p != None:                 
+         nome = agenda[p][0]     
+         endereco = agenda[p][1]   
+         rua = agenda [p][2]
+         estado = agenda[p][3]
+         cep = agenda [p][4]
+         telefone = agenda[p][5]
+         bairro = agenda [p][6]     
+         print("Encontrado:")      
+         listar_dados(nome, endereco, estado, telefone, rua, bairro, cep) 
+         nome = p_nome[p][0]       
+         endereco = p_endereco[p][1]   
+         rua = p_rua[p][2]
+         estado = p_estado[p][3]
+         cep = p_cep [p][4]
+         telefone = p_telefone[p][5]
+         bairro = p_bairro [p][6]         
+         agenda[p] = [nome, endereco, estado, telefone, rua, bairro, cep] 
+     else:
+         print("Nome não encontrado.") 
+ 
+ 
+def listar():                      #Função para mostrar lista de contatos.
+     print("\nAgenda\n\n------")
+     for e in agenda:
+         listar_dados(e[0], e[1], e[2], e[3], e[4], e[5], e[6])
+     print("------\n")
+ 
+def pesquisar():                   
+     p = pesquisa(p_nome())        #Entrada de dados.
+     if p != None:                 
+         nome = agenda[p][0]      
+         endereco = agenda[p][1]   
+         rua = agenda [p][2]
+         estado = agenda[p][3]
+         cep = agenda [p][4]
+         telefone = agenda[p][5]
+         bairro = agenda [p][6]
+         print("Encontrado:")      #Exibi informação na tela.
+         listar_dados(nome, endereco, rua, bairro, telefone, estado, cep)  #Mostra os dados.
+     else:
+          print("Nome não encontrado.")      #Executa caso a condição seja falsa.
+ 
+def validar(pergunta, inicio, fim):          #Função para validar numeros inteiros.
+     while True:                             
+         try:                                
+               valor = int(input(pergunta))  
+               if inicio <= valor <= fim:    
+                   return(valor)             
+               return                       
+         except ValueError:                  #Executa caso for falsa.
+               print("Valor inválido, favor digitar entre %d e %d" % (inicio, fim))
+"""
+Estamos usando a instrução Try-except, para tratar de um erro anormal,
+inesperado que possa ocorrer durante a execução do programa.
+Caso o usuário digite um dado diferente do tipo inteiro...
+Vai gerar um erro de valor (ValueError) e irá fazer com que nosso
+programa pare de funcionar e mostre uma mensagem de erro na tela.
+Com isso, utilizamos essa instrução para criar nossa própria mensagem
+de erro, e assim podemos também evitar a parada do nosso programa.
+"""
+arq = open('arquivo.txt', 'r')
+arq.close()
+def menu():                   #Função que exibe o menu de opções.
+     print("""
+   1 - Adicionar novo contato
+   2 - Editar um contato
+   3 - Pesquisar contato
+   4 - Lista de contatos
+   5 - Apagar um contato
+   6 - Sair
+""")
+    
+     return validar("Escolha uma opção: ",1,6) #Retorna o valor da opção desejada.
+ 
+ 
+while True:                             #Criando um loop infinito.
+     opção = menu()
+     if opção == 6:                     
+         break
+     elif opção == 1:
+         novo()
+     elif opção == 2:
+         editar()
+     elif opção == 3:
+         pesquisar()
+     elif opção == 4:
+         listar()
+     elif opção == 5:
+         apagar()
